@@ -2,7 +2,7 @@
 {
     public class DropdownOption
     {
-        public int id { get; set; }
+        public string id { get; set; }
         public string label { get; set; }
     }
 }

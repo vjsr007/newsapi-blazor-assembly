@@ -1,4 +1,8 @@
-﻿<div class="component">
+﻿@inject NewsState NewsState
+@inject HttpClient Http
+@using Client.Contract
+
+<div class="component">
     <div class="header">
         <label class="title">News API</label>
         <label class="subtitle">Use filters to get articles</label>
@@ -7,7 +11,7 @@
         <CustomLabel Label="Topic"></CustomLabel>
         <CustomInput></CustomInput>
         <CustomLabel Label="Sources"></CustomLabel>
-        <Dropdown MultiSelect=true OnChange="@HandleOnChange" Options="@options"></Dropdown>
+        <Dropdown MultiSelect=true OnChange="@HandleOnChange" Options="@sources"></Dropdown>
         <CustomLabel Label="Dates"></CustomLabel>
         <Dropdown OnChange="@HandleOnChange" Options="@options"></Dropdown>
         <CustomLabel Label="Languages"></CustomLabel>
@@ -21,13 +25,27 @@
 
 @code {
     private List<DropdownOption> options = new List<DropdownOption> {
-        new DropdownOption { id = 1, label = "Option 1" },
-        new DropdownOption { id = 2, label = "Option 2" }
+        new DropdownOption { id = "1", label = "Option 1" },
+        new DropdownOption { id = "2", label = "Option 2" }
     };
+
+    private List<DropdownOption> sources = new List<DropdownOption>();
 
     public void HandleOnChange(ICollection<DropdownOption> ops)
     {
-        Console.WriteLine($"option selected {ops?.FirstOrDefault()?.label ?? ""}");
+        NewsState.SetSources(ops);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Http.GetFromJsonAsync<SourceResponse<Source>>("https://newsapi.org/v2/top-headlines/sources?&apiKey=738b6f5d0abb4544a09ffd6fffd5a8fb");
+        sources.AddRange(response.Sources.Select(item => new DropdownOption { id = item.Id, label = item.Name }).ToList());
+        NewsState.OnChangeSources += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        NewsState.OnChangeSources -= StateHasChanged;
     }
 }
 

@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <Watch Remove="Contract\ApiResponse.cs" />
+    <Watch Remove="Contract\SourceResponse.cs" />
     <Watch Remove="Shared\Components\CustomButton.razor" />
     <Watch Remove="Shared\Components\CustomInput.razor" />
     <Watch Remove="Shared\Components\CustomLabel\CustomLabel.razor" />
@@ -45,6 +46,7 @@
     <Watch Remove="Shared\Components\Post.razor" />
     <Watch Remove="Shared\Components\Post\Article.cs" />
     <Watch Remove="Shared\Components\Post\Source.cs" />
+    <Watch Remove="Stored\NewsState.cs" />
   </ItemGroup>
 
   <ItemGroup>

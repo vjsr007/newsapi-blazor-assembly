@@ -22,7 +22,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        ApiResponse response = await Http.GetFromJsonAsync<ApiResponse>("https://newsapi.org/v2/everything?q=*&pageSize=10&apiKey=738b6f5d0abb4544a09ffd6fffd5a8fb");
+        var response = await Http.GetFromJsonAsync<ApiResponse<Article>>("https://newsapi.org/v2/everything?q=*&pageSize=10&apiKey=738b6f5d0abb4544a09ffd6fffd5a8fb");
 
         Articles.AddRange(response.Articles);
     }
