@@ -1,0 +1,26 @@
+﻿<div class="component">
+    <div class="header">
+        <div class="title">@Item.Title</div>
+        <div class="author">
+            @Item.PublishedAt
+        </div>
+        <div class="author">
+            @("By" + Item?.Author ?? "")
+        </div>
+        <div class="source">@(Item?.Source?.Name ?? "")</div>
+    </div>
+    <div class="content">
+        <div class="img-section">
+            <img class="image" src="@Item.UrlToImage" />
+        </div>
+        <div class="article">
+            <div class="text">@Item.Description</div>
+            <a href="@Item.Url" class="text" target="_blank">Go to article</a>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Article Item { get; set; }
+}

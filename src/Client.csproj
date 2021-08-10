@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Service\" />
     <Folder Include="Npm\" />
   </ItemGroup>
 
@@ -25,7 +26,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Shared\Components\CustomButton.razor" />
+    <Content Remove="Shared\Components\CustomInput.razor" />
+    <Content Remove="Shared\Components\Loader.razor" />
+    <Content Remove="Shared\Components\Pager.razor" />
+    <Content Remove="Shared\Components\Post.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Contract\ApiResponse.cs" />
+    <Watch Remove="Shared\Components\CustomButton.razor" />
+    <Watch Remove="Shared\Components\CustomInput.razor" />
+    <Watch Remove="Shared\Components\CustomLabel\CustomLabel.razor" />
     <Watch Remove="Shared\Components\Dropdown\DropdownOption.cs" />
+    <Watch Remove="Shared\Components\Loader.razor" />
+    <Watch Remove="Shared\Components\Loader\LoaderTypeEnum.cs" />
+    <Watch Remove="Shared\Components\Pager.razor" />
+    <Watch Remove="Shared\Components\Post.razor" />
+    <Watch Remove="Shared\Components\Post\Article.cs" />
+    <Watch Remove="Shared\Components\Post\Source.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Shared\Components\Loader\Loader.razor" />
+    <None Include="Shared\Components\CustomButton\CustomButton.razor" />
+    <None Include="Shared\Components\CustomInput\CustomInput.razor" />
+    <None Include="Shared\Components\CustomLabel\CustomLabel.razor" />
+    <None Include="Shared\Components\Pager\Pager.razor" />
+    <None Include="Shared\Components\Post\Post.razor" />
   </ItemGroup>
 
 </Project>

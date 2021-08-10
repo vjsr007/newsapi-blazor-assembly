@@ -1,0 +1,10 @@
+﻿@namespace Client.Shared.Components.CustomButton
+
+<button type="button" class="component">
+    <label>@Label</label>
+</button>
+
+@code {
+    [Parameter]
+    public string Label { get; set; } = "Custom button";
+}

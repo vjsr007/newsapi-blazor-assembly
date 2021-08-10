@@ -13,7 +13,7 @@
             <div title="@option.label" id="@option.id" class="option" @onclick=@(() => SelectOption(option))>
                 @if (MultiSelect)
                 {
-                    <input checked=@(Selected.Any(op => option.id == op.id)) class="checkbox" type="checkbox" id="chk_@option.id" name="chk_@option.id" />
+                    <input @onchange=@(() => SelectOption(option)) checked=@(Selected.Any(op => option.id == op.id)) class="checkbox" type="checkbox" id="chk_@option.id" name="chk_@option.id" />
                 }
                 <label for="chk_@option.id" class="name">@option.label</label>
             </div>
@@ -52,9 +52,12 @@
     {
         if (MultiSelect)
         {
-            if ((bool)Selected?.Any(op => option.id != op.id))
+            if (!(bool)Selected?.Any(op => option.id == op.id))
             {
                 Selected.Add(option);
+            }
+            else {
+                Selected = Selected?.Where(op => option.id != op.id).ToList();
             }
         }
         else

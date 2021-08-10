@@ -4,10 +4,20 @@
         <label class="subtitle">Use filters to get articles</label>
     </div>
     <div class="form">
+        <CustomLabel Label="Topic"></CustomLabel>
+        <CustomInput></CustomInput>
+        <CustomLabel Label="Sources"></CustomLabel>
+        <Dropdown MultiSelect=true OnChange="@HandleOnChange" Options="@options"></Dropdown>
+        <CustomLabel Label="Dates"></CustomLabel>
         <Dropdown OnChange="@HandleOnChange" Options="@options"></Dropdown>
+        <CustomLabel Label="Languages"></CustomLabel>
+        <Dropdown OnChange="@HandleOnChange" Options="@options"></Dropdown>
+        <CustomLabel Label="Sort by"></CustomLabel>
+        <Dropdown OnChange="@HandleOnChange" Options="@options"></Dropdown>
+        <Pager></Pager>
+        <CustomButton Label="Search"></CustomButton>
     </div>
 </div>
-
 
 @code {
     private List<DropdownOption> options = new List<DropdownOption> {
@@ -17,7 +27,7 @@
 
     public void HandleOnChange(ICollection<DropdownOption> ops)
     {
-        Console.WriteLine($"option selected {ops.FirstOrDefault().label}");
+        Console.WriteLine($"option selected {ops?.FirstOrDefault()?.label ?? ""}");
     }
 }
 

@@ -1,0 +1,11 @@
+﻿<div class="component">
+    <div title="first" class="button">@($"<<")</div>
+    <div title="previous" class="button">@($"<")</div>
+    <div title="current page" class="button input">@Page</div>
+    <div title="next" class="button">@($">")</div>
+    <div title="last" class="button">@($">>")</div>
+</div>
+
+@code {
+    private int Page { get; set; } = 1;
+}
