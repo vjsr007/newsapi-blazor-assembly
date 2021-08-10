@@ -1,37 +1,23 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">NewsApiBlazorAssembly</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+﻿<div class="component">
+    <div class="header">
+        <label class="title">News API</label>
+        <label class="subtitle">Use filters to get articles</label>
+    </div>
+    <div class="form">
+        <Dropdown OnChange="@HandleOnChange" Options="@options"></Dropdown>
+    </div>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
-    </ul>
-</div>
 
 @code {
-    private bool collapseNavMenu = true;
+    private List<DropdownOption> options = new List<DropdownOption> {
+        new DropdownOption { id = 1, label = "Option 1" },
+        new DropdownOption { id = 2, label = "Option 2" }
+    };
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
+    public void HandleOnChange(ICollection<DropdownOption> ops)
     {
-        collapseNavMenu = !collapseNavMenu;
+        Console.WriteLine($"option selected {ops.FirstOrDefault().label}");
     }
 }
+

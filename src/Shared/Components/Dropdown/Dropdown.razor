@@ -1,0 +1,68 @@
+﻿@namespace Client.Shared.Components.Dropdown
+
+<div class="component" @onblur=@Hide>
+    <button type="button" tabIndex=0 @onclick=@Toggle>
+        <input type="text" class="input" title="@ShowPlaceholder()" placeholder="@ShowPlaceholder()" readOnly />
+        <div class="button down">
+            <i class="@(Open ? "icon_triangule_up" : "icon_triangule_down")" />
+        </div>
+    </button>
+    <div id="options" class="options @(Open ? "show" : "hidden")">
+        @foreach (var option in Options)
+        {
+            <div title="@option.label" id="@option.id" class="option" @onclick=@(() => SelectOption(option))>
+                @if (MultiSelect)
+                {
+                    <input checked=@(Selected.Any(op => option.id == op.id)) class="checkbox" type="checkbox" id="chk_@option.id" name="chk_@option.id" />
+                }
+                <label for="chk_@option.id" class="name">@option.label</label>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public ICollection<DropdownOption> Options { get; set; } = new HashSet<DropdownOption>();
+
+    [Parameter]
+    public bool MultiSelect { get; set; } = false;
+
+    [Parameter]
+    public string DefaultText { get; set; } = "Select your option";
+
+    [Parameter]
+    public EventCallback<ICollection<DropdownOption>> OnChange { get; set; }
+
+    public bool Open { get; set; } = false;
+
+    private ICollection<DropdownOption> Selected { get; set; } = new HashSet<DropdownOption>();
+
+    void Toggle() {
+        Open = !Open;
+    }
+
+    void Hide() {
+        Open = false;
+    }
+
+    string ShowPlaceholder() => (Selected?.Count > 0 ? string.Join(",", Selected.Select(op => op.label)) : DefaultText);
+
+    private async void SelectOption(DropdownOption option)
+    {
+        if (MultiSelect)
+        {
+            if ((bool)Selected?.Any(op => option.id != op.id))
+            {
+                Selected.Add(option);
+            }
+        }
+        else
+        {
+            Selected = new List<DropdownOption> { option };
+            Toggle();
+        }
+
+        await OnChange.InvokeAsync(Selected);
+    }
+}
