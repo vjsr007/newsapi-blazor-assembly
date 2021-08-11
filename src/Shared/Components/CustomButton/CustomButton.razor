@@ -1,10 +1,13 @@
 ﻿@namespace Client.Shared.Components.CustomButton
 
-<button type="button" class="component">
+<button type="button" class="component" @onclick="@OnClick">
     <label>@Label</label>
 </button>
 
 @code {
     [Parameter]
     public string Label { get; set; } = "Custom button";
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
 }

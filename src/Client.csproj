@@ -11,10 +11,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.8" PrivateAssets="all" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Helpers\" />
     <Folder Include="Service\" />
     <Folder Include="Npm\" />
   </ItemGroup>
@@ -35,7 +37,8 @@
 
   <ItemGroup>
     <Watch Remove="Constants\NewsApiConstants.cs" />
-    <Watch Remove="Contract\ApiResponse.cs" />
+    <Watch Remove="Contract\NewsApiRequest.cs" />
+    <Watch Remove="Contract\NewsApiResponse.cs" />
     <Watch Remove="Contract\SourceResponse.cs" />
     <Watch Remove="Shared\Components\CustomButton.razor" />
     <Watch Remove="Shared\Components\CustomInput.razor" />

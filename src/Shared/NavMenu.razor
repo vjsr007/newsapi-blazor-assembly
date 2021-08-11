@@ -21,12 +21,15 @@
         <Dropdown OnChange="@ChangeLanguages" Options="@languages"></Dropdown>
         <CustomLabel Label="Sort by"></CustomLabel>
         <Dropdown OnChange="@ChangeSortBy" Options="@sortBy"></Dropdown>
-        <Pager></Pager>
-        <CustomButton Label="Search"></CustomButton>
+        <Pager OnChange="@ChangeCurrentPage" NumberOfItems="@(NewsState?.NumberOfItems ?? 0)" PageSize="@NewsApiConstants.PAGE_SIZE" ></Pager>
+        <CustomButton OnClick="@(async() => await RequestArticle.InvokeAsync())" Label="Search"></CustomButton>
     </div>
 </div>
 
 @code {
+    [Parameter]
+    public EventCallback RequestArticle { get; set; }
+
     private List<DropdownOption> sources = new List<DropdownOption>();
     private List<DropdownOption> languages = new List<DropdownOption>();
     private List<DropdownOption> dates = new List<DropdownOption>();
@@ -37,6 +40,10 @@
     public void ChangeDates(ICollection<DropdownOption> ops) => NewsState.SetDate(ops);
     public void ChangeLanguages(ICollection<DropdownOption> ops) => NewsState.SetLanguage(ops);
     public void ChangeSortBy(ICollection<DropdownOption> ops) => NewsState.SetSortBy(ops);
+    public async void ChangeCurrentPage(int page) {
+        NewsState.SetPage(page);
+        await RequestArticle.InvokeAsync();
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -47,12 +54,5 @@
         languages.AddRange(await Http.GetFromJsonAsync<ICollection<DropdownOption>>("data/languages.json"));
         dates.AddRange(await Http.GetFromJsonAsync<ICollection<DropdownOption>>("data/dates.json"));
         sortBy.AddRange(await Http.GetFromJsonAsync<ICollection<DropdownOption>>("data/sortBy.json"));
-
-        NewsState.OnChangeSources += StateHasChanged;
-    }
-
-    public void Dispose()
-    {
-        NewsState.OnChangeSources -= StateHasChanged;
     }
 }

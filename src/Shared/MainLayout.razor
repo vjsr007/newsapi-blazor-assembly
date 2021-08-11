@@ -1,9 +1,55 @@
 ﻿@inherits LayoutComponentBase
+@inject HttpClient Http
+@inject IConfiguration Configuration
+@inject NewsState NewsState
+@using Microsoft.Extensions.Configuration
+@using Client.Contract
+@using Client.Constants
+@using Newtonsoft.Json.Linq
+@using System.Web
 
 <div class="component">
-    <NavMenu />
+    <NavMenu RequestArticle="@RequestArticles" />
     <div class="content">
         @Body
     </div>
 </div>
 
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await RequestArticles();
+    }
+
+    async Task RequestArticles() {
+        var sources = NewsState?.SourceSelected?.Select(s => s.id).ToArray();
+        var filters = new NewsApiRequest
+        {
+            Page = NewsState?.CurrentPage ?? 1,
+            PageSize = NewsApiConstants.PAGE_SIZE,
+            Query = NewsState?.TopicSelected ?? "*",
+            Sources = sources != null ? string.Join(',', sources) : String.Empty,
+            Language = NewsState?.LanguageSelected?.Select(s => s.id).FirstOrDefault() ?? "",
+            SortBy = NewsState?.SortBySelected?.Select(s => s.id).FirstOrDefault() ?? "",
+        };
+        var queryString = GetQueryString(filters);
+        var url = Configuration["NewsAPI:url"];
+        var articlesEndpoint = string.Format(NewsApiConstants.ARTICLES_ENDPOINT, url, queryString, Configuration["NewsAPI:key"]);
+        var response = await Http.GetFromJsonAsync<NewsApiResponse<Article>>(articlesEndpoint);
+
+        NewsState.SetNumberOfItems(response?.TotalResults ?? 0);
+        NewsState.SetArticles(response?.Articles ?? new HashSet<Article>());
+    }
+
+    public string GetQueryString(NewsApiRequest request)
+    {
+        var json = System.Text.Json.JsonSerializer.Serialize(request);
+        var jObj = JObject.FromObject(request);
+
+        return String.Join("&",
+                        jObj.Children().Cast<JProperty>()
+                        .Where(jp => !string.IsNullOrEmpty(jp.Value.ToString()) && jp.Value.ToString() != "[]")
+                        .Select(jp => jp.Name + "=" + HttpUtility.UrlEncode(jp.Value.ToString())));
+
+    }
+}

@@ -1,14 +1,10 @@
-﻿@inject HttpClient Http
-@inject IConfiguration Configuration
-@using Microsoft.Extensions.Configuration
-@using Client.Contract
-@using Client.Constants
+﻿@inject NewsState NewsState
 @page "/"
 
 <div class="component">
-    @if (Articles.Count > 0)
+    @if (NewsState?.Articles?.Count > 0)
     {
-        @foreach (var article in Articles)
+        @foreach (var article in NewsState.Articles)
         {
             <Post Item=@article></Post>
         }
@@ -18,15 +14,15 @@
         <div class="loader"><Loader /></div>
     }
 </div>
+
 @code {
-    List<Article> Articles { get; set; } = new List<Article>();
-
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        var url = Configuration["NewsAPI:url"];
-        var articlesEndpoint = string.Format(NewsApiConstants.ARTICLES_ENDPOINT, url, "q=*" , Configuration["NewsAPI:key"]);
-        var response = await Http.GetFromJsonAsync<ApiResponse<Article>>(articlesEndpoint);
+        NewsState.OnChangeArticles += StateHasChanged;
+    }
 
-        Articles.AddRange(response.Articles);
+    public void Dispose()
+    {
+        NewsState.OnChangeArticles -= StateHasChanged;
     }
 }

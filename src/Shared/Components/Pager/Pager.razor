@@ -1,11 +1,67 @@
 ﻿<div class="component">
-    <div title="first" class="button">@($"<<")</div>
-    <div title="previous" class="button">@($"<")</div>
+    <div title="first" @onclick=@(() => GoTo(GoToEnum.first)) class="button">@($"<<")</div>
+    <div title="previous" @onclick=@(() => GoTo(GoToEnum.previous)) class="button">@($"<")</div>
     <div title="current page" class="button input">@Page</div>
-    <div title="next" class="button">@($">")</div>
-    <div title="last" class="button">@($">>")</div>
+    <div title="next" @onclick=@(() => GoTo(GoToEnum.next)) class="button">@($">")</div>
+    <div title="last" @onclick=@(() => GoTo(GoToEnum.last)) class="button">@($">>")</div>
 </div>
 
 @code {
+    [Parameter]
+    public int PageSize { get; set; } = 20;
+
+    [Parameter]
+    public int NumberOfItems { get; set; } = 0;
+
+    [Parameter]
+    public EventCallback<int> OnChange { get; set; }
+
     private int Page { get; set; } = 1;
+
+    int CalculatePages() => NumberOfItems > 0 ? (int)Math.Ceiling(NumberOfItems / (decimal)PageSize) : 1;
+
+    void GoToFirst() => Page = 1;
+
+    void GoToPrevious() {
+        Page = Page > 1 ? Page - 1 : Page;
+    }
+
+    void GoToNext()
+    {
+        Page = Page < CalculatePages() ? Page + 1 : Page;
+    }
+
+    void GoToLast()
+    {
+        Page = CalculatePages();
+    }
+
+    async void GoTo(GoToEnum where)
+    {
+        switch (where)
+        {
+            case GoToEnum.first:
+                GoToFirst();
+                break;
+            case GoToEnum.previous:
+                GoToPrevious();
+                break;
+            case GoToEnum.next:
+                GoToNext();
+                break;
+            case GoToEnum.last:
+                GoToLast();
+                break;
+        }
+
+        await OnChange.InvokeAsync(Page);
+    }
+
+    enum GoToEnum {
+        first,
+        previous,
+        next,
+        last
+    }
+
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Client.Contract
 {
-    public class ApiResponse<T>
+    public class NewsApiResponse<T>
     {
         public string Status { get; set; }
         public int TotalResults { get; set; } = 0;

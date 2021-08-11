@@ -9,5 +9,6 @@ namespace Client.Constants
     {
         public const string ARTICLES_ENDPOINT = "{0}everything?{1}&apiKey={2}";
         public const string SOURCE_ENDPOINT = "{0}top-headlines/sources?apiKey={1}";
+        public const int PAGE_SIZE = 20;
     }
 }

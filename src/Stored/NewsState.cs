@@ -1,4 +1,5 @@
 ﻿using Client.Shared.Components.Dropdown;
+using Client.Shared.Components.Post;
 using System;
 using System.Collections.Generic;
 
@@ -73,6 +74,48 @@ namespace Client.Stored
             NotifySortByChanged();
         }
         private void NotifySortByChanged() => OnChangeSortBy?.Invoke();
+
+        #endregion
+
+        #region CurrentPage
+        public int CurrentPage { get; private set; } = 1;
+
+        public event Action OnChangePage;
+
+        public void SetPage(int page)
+        {
+            CurrentPage = page;
+            NotifyPageChanged();
+        }
+        private void NotifyPageChanged() => OnChangePage?.Invoke();
+
+        #endregion
+
+        #region NumberOfItems
+        public int NumberOfItems { get; private set; }
+
+        public event Action OnChangeNumberOfItems;
+
+        public void SetNumberOfItems(int numberOfItems)
+        {
+            NumberOfItems = numberOfItems;
+            NotifyNumberOfItemsChanged();
+        }
+        private void NotifyNumberOfItemsChanged() => OnChangeNumberOfItems?.Invoke();
+
+        #endregion
+
+        #region Articles
+        public ICollection<Article> Articles { get; private set; }
+
+        public event Action OnChangeArticles;
+
+        public void SetArticles(ICollection<Article> articles)
+        {
+            Articles = articles;
+            NotifyArticlesChanged();
+        }
+        private void NotifyArticlesChanged() => OnChangeArticles?.Invoke();
 
         #endregion
     }
