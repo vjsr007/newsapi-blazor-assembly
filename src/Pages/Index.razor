@@ -1,5 +1,8 @@
 ﻿@inject HttpClient Http
+@inject IConfiguration Configuration
+@using Microsoft.Extensions.Configuration
 @using Client.Contract
+@using Client.Constants
 @page "/"
 
 <div class="component">
@@ -10,17 +13,19 @@
             <Post Item=@article></Post>
         }
     }
-    else 
+    else
     {
         <div class="loader"><Loader /></div>
-    } 
+    }
 </div>
 @code {
     List<Article> Articles { get; set; } = new List<Article>();
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await Http.GetFromJsonAsync<ApiResponse<Article>>("https://newsapi.org/v2/everything?q=*&pageSize=10&apiKey=738b6f5d0abb4544a09ffd6fffd5a8fb");
+        var url = Configuration["NewsAPI:url"];
+        var articlesEndpoint = string.Format(NewsApiConstants.ARTICLES_ENDPOINT, url, "q=*" , Configuration["NewsAPI:key"]);
+        var response = await Http.GetFromJsonAsync<ApiResponse<Article>>(articlesEndpoint);
 
         Articles.AddRange(response.Articles);
     }

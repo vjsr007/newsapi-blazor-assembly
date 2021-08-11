@@ -1,6 +1,9 @@
 ﻿@inject NewsState NewsState
 @inject HttpClient Http
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @using Client.Contract
+@using Client.Constants
 
 <div class="component">
     <div class="header">
@@ -9,7 +12,7 @@
     </div>
     <div class="form">
         <CustomLabel Label="Topic"></CustomLabel>
-        <CustomInput OnChange=@ChangeTopic ></CustomInput>
+        <CustomInput OnChange=@ChangeTopic></CustomInput>
         <CustomLabel Label="Sources"></CustomLabel>
         <Dropdown DefaultText="Select your sources" MultiSelect=true OnChange="@ChangeSources" Options="@sources"></Dropdown>
         <CustomLabel Label="Dates"></CustomLabel>
@@ -37,7 +40,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await Http.GetFromJsonAsync<SourceResponse<Source>>("https://newsapi.org/v2/top-headlines/sources?&apiKey=738b6f5d0abb4544a09ffd6fffd5a8fb");
+        var url = Configuration["NewsAPI:url"];
+        var sourceEndpoint = string.Format(NewsApiConstants.SOURCE_ENDPOINT, url, Configuration["NewsAPI:key"]);
+        var response = await Http.GetFromJsonAsync<SourceResponse<Source>>(sourceEndpoint);
         sources.AddRange(response.Sources.Select(item => new DropdownOption { id = item.Id, label = item.Name }).ToList());
         languages.AddRange(await Http.GetFromJsonAsync<ICollection<DropdownOption>>("data/languages.json"));
         dates.AddRange(await Http.GetFromJsonAsync<ICollection<DropdownOption>>("data/dates.json"));
