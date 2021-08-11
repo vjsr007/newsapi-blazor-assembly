@@ -1,0 +1,14 @@
+﻿[
+  {
+    "id": "relevancy",
+    "label": "Relevancy"
+  },
+  {
+    "id": "popularity",
+    "label": "Popularity"
+  },
+  {
+    "id": "publishedAt",
+    "label": "PublishedAt"
+  }
+]

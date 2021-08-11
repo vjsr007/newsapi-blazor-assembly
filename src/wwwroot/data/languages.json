@@ -1,0 +1,62 @@
+﻿[
+  {
+    "id": "ar",
+    "label": "ar"
+  },
+  {
+    "id": "de",
+    "label": "de"
+  },
+  {
+    "id": "en",
+    "label": "en"
+  },
+  {
+    "id": "es",
+    "label": "es"
+  },
+  {
+    "id": "de",
+    "label": "de"
+  },
+  {
+    "id": "fr",
+    "label": "fr"
+  },
+  {
+    "id": "he",
+    "label": "he"
+  },
+  {
+    "id": "it",
+    "label": "it"
+  },
+  {
+    "id": "nl",
+    "label": "nl"
+  },
+  {
+    "id": "no",
+    "label": "no"
+  },
+  {
+    "id": "pt",
+    "label": "pt"
+  },
+  {
+    "id": "ru",
+    "label": "ru"
+  },
+  {
+    "id": "se",
+    "label": "se"
+  },
+  {
+    "id": "ud",
+    "label": "ud"
+  },
+  {
+    "id": "zh",
+    "label": "zh"
+  }
+]

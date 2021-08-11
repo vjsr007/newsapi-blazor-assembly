@@ -9,37 +9,40 @@
     </div>
     <div class="form">
         <CustomLabel Label="Topic"></CustomLabel>
-        <CustomInput></CustomInput>
+        <CustomInput OnChange=@ChangeTopic ></CustomInput>
         <CustomLabel Label="Sources"></CustomLabel>
-        <Dropdown MultiSelect=true OnChange="@HandleOnChange" Options="@sources"></Dropdown>
+        <Dropdown DefaultText="Select your sources" MultiSelect=true OnChange="@ChangeSources" Options="@sources"></Dropdown>
         <CustomLabel Label="Dates"></CustomLabel>
-        <Dropdown OnChange="@HandleOnChange" Options="@options"></Dropdown>
+        <Dropdown OnChange="@ChangeDates" Options="@dates"></Dropdown>
         <CustomLabel Label="Languages"></CustomLabel>
-        <Dropdown OnChange="@HandleOnChange" Options="@options"></Dropdown>
+        <Dropdown OnChange="@ChangeLanguages" Options="@languages"></Dropdown>
         <CustomLabel Label="Sort by"></CustomLabel>
-        <Dropdown OnChange="@HandleOnChange" Options="@options"></Dropdown>
+        <Dropdown OnChange="@ChangeSortBy" Options="@sortBy"></Dropdown>
         <Pager></Pager>
         <CustomButton Label="Search"></CustomButton>
     </div>
 </div>
 
 @code {
-    private List<DropdownOption> options = new List<DropdownOption> {
-        new DropdownOption { id = "1", label = "Option 1" },
-        new DropdownOption { id = "2", label = "Option 2" }
-    };
-
     private List<DropdownOption> sources = new List<DropdownOption>();
+    private List<DropdownOption> languages = new List<DropdownOption>();
+    private List<DropdownOption> dates = new List<DropdownOption>();
+    private List<DropdownOption> sortBy = new List<DropdownOption>();
 
-    public void HandleOnChange(ICollection<DropdownOption> ops)
-    {
-        NewsState.SetSources(ops);
-    }
+    public void ChangeTopic(string text) => NewsState.SetTopic(text);
+    public void ChangeSources(ICollection<DropdownOption> ops) => NewsState.SetSources(ops);
+    public void ChangeDates(ICollection<DropdownOption> ops) => NewsState.SetDate(ops);
+    public void ChangeLanguages(ICollection<DropdownOption> ops) => NewsState.SetLanguage(ops);
+    public void ChangeSortBy(ICollection<DropdownOption> ops) => NewsState.SetSortBy(ops);
 
     protected override async Task OnInitializedAsync()
     {
         var response = await Http.GetFromJsonAsync<SourceResponse<Source>>("https://newsapi.org/v2/top-headlines/sources?&apiKey=738b6f5d0abb4544a09ffd6fffd5a8fb");
         sources.AddRange(response.Sources.Select(item => new DropdownOption { id = item.Id, label = item.Name }).ToList());
+        languages.AddRange(await Http.GetFromJsonAsync<ICollection<DropdownOption>>("data/languages.json"));
+        dates.AddRange(await Http.GetFromJsonAsync<ICollection<DropdownOption>>("data/dates.json"));
+        sortBy.AddRange(await Http.GetFromJsonAsync<ICollection<DropdownOption>>("data/sortBy.json"));
+
         NewsState.OnChangeSources += StateHasChanged;
     }
 
@@ -48,4 +51,3 @@
         NewsState.OnChangeSources -= StateHasChanged;
     }
 }
-

@@ -1,5 +1,11 @@
-﻿<input type="text" class="component" />
+﻿<input type="text" @onchange=@ChangeText class="component" />
 
 @code {
-    public Action<string> OnChange { get; set; }
+    [Parameter]
+    public EventCallback<string> OnChange { get; set; }
+
+    async Task ChangeText(ChangeEventArgs ev) {
+
+        await OnChange.InvokeAsync(ev.Value.ToString());
+    }
 }

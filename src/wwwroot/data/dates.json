@@ -1,0 +1,14 @@
+﻿[
+  {
+    "id": "day",
+    "label": "Last day"
+  },
+  {
+    "id": "week",
+    "label": "Last week"
+  },
+  {
+    "id": "month",
+    "label": "Last month"
+  }
+]
