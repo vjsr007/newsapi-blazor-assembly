@@ -31,6 +31,7 @@
     <Content Remove="Shared\Components\Loader.razor" />
     <Content Remove="Shared\Components\Pager.razor" />
     <Content Remove="Shared\Components\Post.razor" />
+    <Content Remove="Shared\Error.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +47,7 @@
     <Watch Remove="Shared\Components\Post.razor" />
     <Watch Remove="Shared\Components\Post\Article.cs" />
     <Watch Remove="Shared\Components\Post\Source.cs" />
+    <Watch Remove="Shared\Error.razor" />
     <Watch Remove="Stored\NewsState.cs" />
   </ItemGroup>
 
@@ -56,6 +58,7 @@
     <None Include="Shared\Components\CustomLabel\CustomLabel.razor" />
     <None Include="Shared\Components\Pager\Pager.razor" />
     <None Include="Shared\Components\Post\Post.razor" />
+    <None Include="Shared\Error.razor" />
   </ItemGroup>
 
 </Project>
