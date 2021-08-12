@@ -4,10 +4,11 @@
     box-sizing: content-box;
     position: relative;
     width: 100%;
-    height: fit-content();
+    height: fit-content;
+    position: relative;
 }
 
-button {
+.option-selected {
     background-color: black;
     text-align: left;
     color: white;
@@ -48,6 +49,7 @@ button {
     height: fit-content;
     max-height: 250px;
     transition: opacity 0.3s, max-height 0.5s;
+    top: 26px;
 }
 
 .hidden {
