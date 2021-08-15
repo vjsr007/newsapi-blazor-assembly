@@ -7,21 +7,20 @@
             <i class="@(Open ? "icon_triangule_up" : "icon_triangule_down")" />
         </div>
     </div>
-    <div class="options @(Open ? "show" : "hidden")" @onmousedown:preventDefault="true" >
+    <div class="options @(Open ? "show" : "hidden")">
         @foreach (var option in Options)
         {
             <div title="@option.label" class="option">
                 @if (MultiSelect)
                 {
-                    <input @onchange="@(() => SelectOption(option))"
-                           @onchange:preventDefault="true"
-                           @onmousedown:preventDefault="true"
+                    <input @onmousedown:preventDefault="true"
+                           @onchange="@(() => SelectOption(option))"
+                           checked="@Selected?.Any(op => op.id==option.id)"
                            class="checkbox"
                            type="checkbox"
-                           id="chk_@option.id.Replace('-', '_')"
                            name="chk_@option.id" />
                 }
-                <label @onmousedown:preventDefault="true" for="chk_@option.id.Replace('-', '_')" class="name">@option.label</label>
+                <button @onmousedown:preventDefault="true" @onclick="@(() => SelectOption(option))" class="name">@option.label</button>
             </div>
         }
     </div>
