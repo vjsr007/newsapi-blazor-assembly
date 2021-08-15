@@ -64,8 +64,4 @@
     <None Include="Shared\Components\Post\Post.razor" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
-
 </Project>

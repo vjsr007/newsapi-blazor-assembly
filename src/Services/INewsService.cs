@@ -1,8 +1,9 @@
 ﻿using Client.Contract;
 using Client.Shared.Components.Post;
+using Client.Stored;
 using System.Threading.Tasks;
 
-namespace Client.Stored
+namespace Client.Services
 {
     public interface INewsService
     {

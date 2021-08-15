@@ -1,6 +1,7 @@
 ﻿using Client.Constants;
 using Client.Contract;
 using Client.Shared.Components.Post;
+using Client.Stored;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 using System;
@@ -10,7 +11,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Client.Stored
+namespace Client.Services
 {
     public class NewsService : INewsService
     {
