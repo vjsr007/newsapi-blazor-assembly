@@ -18,6 +18,8 @@ namespace Client
 
             builder.Services.AddScoped(state => new NewsState());
 
+            builder.Services.AddScoped(state => new NewsService(builder.Configuration));
+
             await builder.Build().RunAsync();
         }
     }

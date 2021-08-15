@@ -16,15 +16,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
-    <Folder Include="Service\" />
-    <Folder Include="Npm\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Watch Include="..\**\*.razor" />
     <Watch Include="..\**\*.scss" />
     <Watch Include="..\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Npm\**" />
+    <Content Remove="Npm\**" />
+    <EmbeddedResource Remove="Npm\**" />
+    <None Remove="Npm\**" />
+    <Watch Remove="Npm\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,6 +62,10 @@
     <None Include="Shared\Components\CustomLabel\CustomLabel.razor" />
     <None Include="Shared\Components\Pager\Pager.razor" />
     <None Include="Shared\Components\Post\Post.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helpers\" />
   </ItemGroup>
 
 </Project>
