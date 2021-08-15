@@ -1,29 +1,27 @@
 ﻿@namespace Client.Shared.Components.Dropdown
 
-<div tabindex="0" class="component" @onblur=@Hide>
-    <div class="option-selected" tabIndex=0 @onclick=@Toggle >
+<div tabindex="0" class="component" @onfocusout="@Hide">
+    <div class="option-selected" @onmousedown=@Toggle>
         <input type="text" class="input" title="@ShowPlaceholder()" placeholder="@ShowPlaceholder()" readOnly />
         <div class="button down">
             <i class="@(Open ? "icon_triangule_up" : "icon_triangule_down")" />
         </div>
     </div>
-    <div class="options @(Open ? "show" : "hidden")">
+    <div class="options @(Open ? "show" : "hidden")" @onmousedown:preventDefault="true" >
         @foreach (var option in Options)
         {
             <div title="@option.label" class="option">
                 @if (MultiSelect)
                 {
-                    <input
-                        @onmousedown:preventDefault="true"
-                        @onclick="@(() => SelectOption(option))"
-                        checked=@(Selected.Any(op => option.id == op.id))
-                        class="checkbox"
-                        type="checkbox"
-                        id="chk_@option.id.Replace('-', '_')"
-                        name="chk_@option.id"
-                    />
+                    <input @onchange="@(() => SelectOption(option))"
+                           @onchange:preventDefault="true"
+                           @onmousedown:preventDefault="true"
+                           class="checkbox"
+                           type="checkbox"
+                           id="chk_@option.id.Replace('-', '_')"
+                           name="chk_@option.id" />
                 }
-                <label @onclick="@(() => SelectOption(option))" @onclick:preventDefault="true" for="chk_@option.id.Replace('-', '_')" class="name">@option.label</label>
+                <label @onmousedown:preventDefault="true" for="chk_@option.id.Replace('-', '_')" class="name">@option.label</label>
             </div>
         }
     </div>
